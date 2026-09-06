@@ -1,0 +1,1702 @@
+{
+  "reference": "2026-09-03T10:00:00+05:00",
+  "cases": 68,
+  "passed": 68,
+  "results": [
+    {
+      "text": "Meeting tomorrow at 4 PM",
+      "passed": true,
+      "expected": {
+        "text": "Meeting tomorrow at 4 PM",
+        "start": "2026-09-04T16:00"
+      },
+      "actual": {
+        "start": "2026-09-04T16:00:00+05:00",
+        "end": "2026-09-04T17:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "tomorrow"
+      }
+    },
+    {
+      "text": "Meeting today at noon",
+      "passed": true,
+      "expected": {
+        "text": "Meeting today at noon",
+        "start": "2026-09-03T12:00"
+      },
+      "actual": {
+        "start": "2026-09-03T12:00:00+05:00",
+        "end": "2026-09-03T13:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "today"
+      }
+    },
+    {
+      "text": "Meeting day after tomorrow at 10 AM",
+      "passed": true,
+      "expected": {
+        "text": "Meeting day after tomorrow at 10 AM",
+        "start": "2026-09-05T10:00"
+      },
+      "actual": {
+        "start": "2026-09-05T10:00:00+05:00",
+        "end": "2026-09-05T11:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "day after tomorrow"
+      }
+    },
+    {
+      "text": "Submit in three days",
+      "passed": true,
+      "expected": {
+        "text": "Submit in three days",
+        "start": "2026-09-06T00:00"
+      },
+      "actual": {
+        "start": "2026-09-06T00:00:00+05:00",
+        "end": "2026-09-07T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "in 3 days"
+      }
+    },
+    {
+      "text": "Call in two weeks",
+      "passed": true,
+      "expected": {
+        "text": "Call in two weeks",
+        "start": "2026-09-17T00:00"
+      },
+      "actual": {
+        "start": "2026-09-17T00:00:00+05:00",
+        "end": "2026-09-18T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "in 2 weeks"
+      }
+    },
+    {
+      "text": "Call in one week at 11 AM",
+      "passed": true,
+      "expected": {
+        "text": "Call in one week at 11 AM",
+        "start": "2026-09-10T11:00"
+      },
+      "actual": {
+        "start": "2026-09-10T11:00:00+05:00",
+        "end": "2026-09-10T12:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "in 1 week"
+      }
+    },
+    {
+      "text": "Call in ten days",
+      "passed": true,
+      "expected": {
+        "text": "Call in ten days",
+        "start": "2026-09-13T00:00"
+      },
+      "actual": {
+        "start": "2026-09-13T00:00:00+05:00",
+        "end": "2026-09-14T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "in 10 days"
+      }
+    },
+    {
+      "text": "Appointment in 30 days",
+      "passed": true,
+      "expected": {
+        "text": "Appointment in 30 days",
+        "start": "2026-10-03T00:00"
+      },
+      "actual": {
+        "start": "2026-10-03T00:00:00+05:00",
+        "end": "2026-10-04T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "in 30 days"
+      }
+    },
+    {
+      "text": "Payment in one month",
+      "passed": true,
+      "expected": {
+        "text": "Payment in one month",
+        "start": "2026-10-03T00:00"
+      },
+      "actual": {
+        "start": "2026-10-03T00:00:00+05:00",
+        "end": "2026-10-04T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "in 1 month"
+      }
+    },
+    {
+      "text": "Renewal in two months",
+      "passed": true,
+      "expected": {
+        "text": "Renewal in two months",
+        "start": "2026-11-03T00:00"
+      },
+      "actual": {
+        "start": "2026-11-03T00:00:00+05:00",
+        "end": "2026-11-04T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "in 2 months"
+      }
+    },
+    {
+      "text": "Meeting Monday at 9 AM",
+      "passed": true,
+      "expected": {
+        "text": "Meeting Monday at 9 AM",
+        "start": "2026-09-07T09:00"
+      },
+      "actual": {
+        "start": "2026-09-07T09:00:00+05:00",
+        "end": "2026-09-07T10:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "monday"
+      }
+    },
+    {
+      "text": "Meeting Tuesday at 10 AM",
+      "passed": true,
+      "expected": {
+        "text": "Meeting Tuesday at 10 AM",
+        "start": "2026-09-08T10:00"
+      },
+      "actual": {
+        "start": "2026-09-08T10:00:00+05:00",
+        "end": "2026-09-08T11:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "tuesday"
+      }
+    },
+    {
+      "text": "Meeting Wednesday at 11 AM",
+      "passed": true,
+      "expected": {
+        "text": "Meeting Wednesday at 11 AM",
+        "start": "2026-09-09T11:00"
+      },
+      "actual": {
+        "start": "2026-09-09T11:00:00+05:00",
+        "end": "2026-09-09T12:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "wednesday"
+      }
+    },
+    {
+      "text": "Meeting Thursday at 12 PM",
+      "passed": true,
+      "expected": {
+        "text": "Meeting Thursday at 12 PM",
+        "start": "2026-09-03T12:00"
+      },
+      "actual": {
+        "start": "2026-09-03T12:00:00+05:00",
+        "end": "2026-09-03T13:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "thursday"
+      }
+    },
+    {
+      "text": "Meeting Friday at 1 PM",
+      "passed": true,
+      "expected": {
+        "text": "Meeting Friday at 1 PM",
+        "start": "2026-09-04T13:00"
+      },
+      "actual": {
+        "start": "2026-09-04T13:00:00+05:00",
+        "end": "2026-09-04T14:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "friday"
+      }
+    },
+    {
+      "text": "Meeting Saturday at 2 PM",
+      "passed": true,
+      "expected": {
+        "text": "Meeting Saturday at 2 PM",
+        "start": "2026-09-05T14:00"
+      },
+      "actual": {
+        "start": "2026-09-05T14:00:00+05:00",
+        "end": "2026-09-05T15:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "saturday"
+      }
+    },
+    {
+      "text": "Meeting Sunday at 3 PM",
+      "passed": true,
+      "expected": {
+        "text": "Meeting Sunday at 3 PM",
+        "start": "2026-09-06T15:00"
+      },
+      "actual": {
+        "start": "2026-09-06T15:00:00+05:00",
+        "end": "2026-09-06T16:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "sunday"
+      }
+    },
+    {
+      "text": "Meeting next Monday",
+      "passed": true,
+      "expected": {
+        "text": "Meeting next Monday",
+        "start": "2026-09-07T00:00"
+      },
+      "actual": {
+        "start": "2026-09-07T00:00:00+05:00",
+        "end": "2026-09-08T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Next weekday means that weekday in the next Monday-starting week.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "next monday"
+      }
+    },
+    {
+      "text": "Meeting next Tuesday",
+      "passed": true,
+      "expected": {
+        "text": "Meeting next Tuesday",
+        "start": "2026-09-08T00:00"
+      },
+      "actual": {
+        "start": "2026-09-08T00:00:00+05:00",
+        "end": "2026-09-09T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Next weekday means that weekday in the next Monday-starting week.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "next tuesday"
+      }
+    },
+    {
+      "text": "Meeting next Wednesday",
+      "passed": true,
+      "expected": {
+        "text": "Meeting next Wednesday",
+        "start": "2026-09-09T00:00"
+      },
+      "actual": {
+        "start": "2026-09-09T00:00:00+05:00",
+        "end": "2026-09-10T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Next weekday means that weekday in the next Monday-starting week.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "next wednesday"
+      }
+    },
+    {
+      "text": "Meeting next Thursday",
+      "passed": true,
+      "expected": {
+        "text": "Meeting next Thursday",
+        "start": "2026-09-10T00:00"
+      },
+      "actual": {
+        "start": "2026-09-10T00:00:00+05:00",
+        "end": "2026-09-11T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Next weekday means that weekday in the next Monday-starting week.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "next thursday"
+      }
+    },
+    {
+      "text": "Meeting next Friday",
+      "passed": true,
+      "expected": {
+        "text": "Meeting next Friday",
+        "start": "2026-09-11T00:00"
+      },
+      "actual": {
+        "start": "2026-09-11T00:00:00+05:00",
+        "end": "2026-09-12T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Next weekday means that weekday in the next Monday-starting week.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "next friday"
+      }
+    },
+    {
+      "text": "Meeting next Saturday",
+      "passed": true,
+      "expected": {
+        "text": "Meeting next Saturday",
+        "start": "2026-09-12T00:00"
+      },
+      "actual": {
+        "start": "2026-09-12T00:00:00+05:00",
+        "end": "2026-09-13T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Next weekday means that weekday in the next Monday-starting week.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "next saturday"
+      }
+    },
+    {
+      "text": "Meeting next Sunday",
+      "passed": true,
+      "expected": {
+        "text": "Meeting next Sunday",
+        "start": "2026-09-13T00:00"
+      },
+      "actual": {
+        "start": "2026-09-13T00:00:00+05:00",
+        "end": "2026-09-14T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Next weekday means that weekday in the next Monday-starting week.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "next sunday"
+      }
+    },
+    {
+      "text": "Exam October 3 at 11 AM",
+      "passed": true,
+      "expected": {
+        "text": "Exam October 3 at 11 AM",
+        "start": "2026-10-03T11:00"
+      },
+      "actual": {
+        "start": "2026-10-03T11:00:00+05:00",
+        "end": "2026-10-03T12:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Year inferred from the source reference year; no automatic one-year rollover.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "october 3"
+      }
+    },
+    {
+      "text": "Exam 3 October at 11 AM",
+      "passed": true,
+      "expected": {
+        "text": "Exam 3 October at 11 AM",
+        "start": "2026-10-03T11:00"
+      },
+      "actual": {
+        "start": "2026-10-03T11:00:00+05:00",
+        "end": "2026-10-03T12:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Year inferred from the source reference year; no automatic one-year rollover.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "3 october"
+      }
+    },
+    {
+      "text": "Exam 03/10/2026",
+      "passed": true,
+      "expected": {
+        "text": "Exam 03/10/2026",
+        "start": "2026-10-03T00:00"
+      },
+      "actual": {
+        "start": "2026-10-03T00:00:00+05:00",
+        "end": "2026-10-04T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Numeric date interpreted using configured DMY order.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "03/10/2026"
+      }
+    },
+    {
+      "text": "Exam 2026-10-03",
+      "passed": true,
+      "expected": {
+        "text": "Exam 2026-10-03",
+        "start": "2026-10-03T00:00"
+      },
+      "actual": {
+        "start": "2026-10-03T00:00:00+05:00",
+        "end": "2026-10-04T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "2026-10-03"
+      }
+    },
+    {
+      "text": "Meeting 12 Sep",
+      "passed": true,
+      "expected": {
+        "text": "Meeting 12 Sep",
+        "start": "2026-09-12T00:00"
+      },
+      "actual": {
+        "start": "2026-09-12T00:00:00+05:00",
+        "end": "2026-09-13T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Year inferred from the source reference year; no automatic one-year rollover.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "12 sep"
+      }
+    },
+    {
+      "text": "Meeting Sep 12",
+      "passed": true,
+      "expected": {
+        "text": "Meeting Sep 12",
+        "start": "2026-09-12T00:00"
+      },
+      "actual": {
+        "start": "2026-09-12T00:00:00+05:00",
+        "end": "2026-09-13T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Year inferred from the source reference year; no automatic one-year rollover.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "sep 12"
+      }
+    },
+    {
+      "text": "Renewal December 18",
+      "passed": true,
+      "expected": {
+        "text": "Renewal December 18",
+        "start": "2026-12-18T00:00"
+      },
+      "actual": {
+        "start": "2026-12-18T00:00:00+05:00",
+        "end": "2026-12-19T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Year inferred from the source reference year; no automatic one-year rollover.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "december 18"
+      }
+    },
+    {
+      "text": "Renewal 18 December",
+      "passed": true,
+      "expected": {
+        "text": "Renewal 18 December",
+        "start": "2026-12-18T00:00"
+      },
+      "actual": {
+        "start": "2026-12-18T00:00:00+05:00",
+        "end": "2026-12-19T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Year inferred from the source reference year; no automatic one-year rollover.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "18 december"
+      }
+    },
+    {
+      "text": "Meeting September 4 at midnight",
+      "passed": true,
+      "expected": {
+        "text": "Meeting September 4 at midnight",
+        "start": "2026-09-04T00:00"
+      },
+      "actual": {
+        "start": "2026-09-04T00:00:00+05:00",
+        "end": "2026-09-04T01:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Year inferred from the source reference year; no automatic one-year rollover.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "september 4"
+      }
+    },
+    {
+      "text": "Meeting September 4 at 16:30",
+      "passed": true,
+      "expected": {
+        "text": "Meeting September 4 at 16:30",
+        "start": "2026-09-04T16:30"
+      },
+      "actual": {
+        "start": "2026-09-04T16:30:00+05:00",
+        "end": "2026-09-04T17:30:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Year inferred from the source reference year; no automatic one-year rollover.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "september 4"
+      }
+    },
+    {
+      "text": "Meeting September 4 at 12 AM",
+      "passed": true,
+      "expected": {
+        "text": "Meeting September 4 at 12 AM",
+        "start": "2026-09-04T00:00"
+      },
+      "actual": {
+        "start": "2026-09-04T00:00:00+05:00",
+        "end": "2026-09-04T01:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Year inferred from the source reference year; no automatic one-year rollover.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "september 4"
+      }
+    },
+    {
+      "text": "Meeting September 4 at 12 PM",
+      "passed": true,
+      "expected": {
+        "text": "Meeting September 4 at 12 PM",
+        "start": "2026-09-04T12:00"
+      },
+      "actual": {
+        "start": "2026-09-04T12:00:00+05:00",
+        "end": "2026-09-04T13:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Year inferred from the source reference year; no automatic one-year rollover.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "september 4"
+      }
+    },
+    {
+      "text": "Meeting September 4 at 4 PM GMT",
+      "passed": true,
+      "expected": {
+        "text": "Meeting September 4 at 4 PM GMT",
+        "start": "2026-09-04T21:00"
+      },
+      "actual": {
+        "start": "2026-09-04T21:00:00+05:00",
+        "end": "2026-09-04T22:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": "GMT",
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T05:00:00+00:00.",
+          "Year inferred from the source reference year; no automatic one-year rollover.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "september 4"
+      }
+    },
+    {
+      "text": "Meeting September 4 at 4 PM UTC",
+      "passed": true,
+      "expected": {
+        "text": "Meeting September 4 at 4 PM UTC",
+        "start": "2026-09-04T21:00"
+      },
+      "actual": {
+        "start": "2026-09-04T21:00:00+05:00",
+        "end": "2026-09-04T22:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": "UTC",
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T05:00:00+00:00.",
+          "Year inferred from the source reference year; no automatic one-year rollover.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "september 4"
+      }
+    },
+    {
+      "text": "EOD Friday",
+      "passed": true,
+      "expected": {
+        "text": "EOD Friday",
+        "start": "2026-09-04T17:00",
+        "settings": {
+          "eod": "17:00"
+        }
+      },
+      "actual": {
+        "start": "2026-09-04T17:00:00+05:00",
+        "end": "2026-09-04T18:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Used configured EOD time.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "friday"
+      }
+    },
+    {
+      "text": "End of day Friday",
+      "passed": true,
+      "expected": {
+        "text": "End of day Friday",
+        "start": "2026-09-04T18:00",
+        "settings": {
+          "eod": "18:00"
+        }
+      },
+      "actual": {
+        "start": "2026-09-04T18:00:00+05:00",
+        "end": "2026-09-04T19:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Used configured EOD time.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "friday"
+      }
+    },
+    {
+      "text": "COB Monday",
+      "passed": true,
+      "expected": {
+        "text": "COB Monday",
+        "start": "2026-09-07T17:30",
+        "settings": {
+          "cob": "17:30"
+        }
+      },
+      "actual": {
+        "start": "2026-09-07T17:30:00+05:00",
+        "end": "2026-09-07T18:30:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Used configured COB time.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "monday"
+      }
+    },
+    {
+      "text": "Meeting beginning of next week",
+      "passed": true,
+      "expected": {
+        "text": "Meeting beginning of next week",
+        "start": "2026-09-07T00:00"
+      },
+      "actual": {
+        "start": "2026-09-07T00:00:00+05:00",
+        "end": "2026-09-08T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "Meeting beginning of next week"
+      }
+    },
+    {
+      "text": "Deadline end of next month",
+      "passed": true,
+      "expected": {
+        "text": "Deadline end of next month",
+        "start": "2026-10-31T00:00"
+      },
+      "actual": {
+        "start": "2026-10-31T00:00:00+05:00",
+        "end": "2026-11-01T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "Deadline end of next month"
+      }
+    },
+    {
+      "text": "Deadline last working day of next month",
+      "passed": true,
+      "expected": {
+        "text": "Deadline last working day of next month",
+        "start": "2026-10-30T00:00"
+      },
+      "actual": {
+        "start": "2026-10-30T00:00:00+05:00",
+        "end": "2026-10-31T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Business days mean Monday\u2013Friday; public holidays are not inferred.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "Deadline last working day of next month"
+      }
+    },
+    {
+      "text": "Meeting first business day of next month",
+      "passed": true,
+      "expected": {
+        "text": "Meeting first business day of next month",
+        "start": "2026-10-01T00:00"
+      },
+      "actual": {
+        "start": "2026-10-01T00:00:00+05:00",
+        "end": "2026-10-02T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Business days mean Monday\u2013Friday; public holidays are not inferred.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "Meeting first business day of next month"
+      }
+    },
+    {
+      "text": "Meeting first Monday of next month",
+      "passed": true,
+      "expected": {
+        "text": "Meeting first Monday of next month",
+        "start": "2026-10-05T00:00"
+      },
+      "actual": {
+        "start": "2026-10-05T00:00:00+05:00",
+        "end": "2026-10-06T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "Meeting first Monday of next month"
+      }
+    },
+    {
+      "text": "Conference September 3\u20135",
+      "passed": true,
+      "expected": {
+        "text": "Conference September 3\u20135",
+        "start": "2026-09-03T00:00",
+        "end": "2026-09-06T00:00"
+      },
+      "actual": {
+        "start": "2026-09-03T00:00:00+05:00",
+        "end": "2026-09-06T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Year inferred from the source reference year; no automatic one-year rollover.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "september 3"
+      }
+    },
+    {
+      "text": "Conference Monday through Wednesday",
+      "passed": true,
+      "expected": {
+        "text": "Conference Monday through Wednesday",
+        "start": "2026-09-07T00:00",
+        "end": "2026-09-10T00:00"
+      },
+      "actual": {
+        "start": "2026-09-07T00:00:00+05:00",
+        "end": "2026-09-10T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "monday"
+      }
+    },
+    {
+      "text": "Conference between October 1 and October 7",
+      "passed": true,
+      "expected": {
+        "text": "Conference between October 1 and October 7",
+        "start": "2026-10-01T00:00",
+        "end": "2026-10-08T00:00"
+      },
+      "actual": {
+        "start": "2026-10-01T00:00:00+05:00",
+        "end": "2026-10-08T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Year inferred from the source reference year; no automatic one-year rollover.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "october 1"
+      }
+    },
+    {
+      "text": "Meeting every Tuesday at 9 AM",
+      "passed": true,
+      "expected": {
+        "text": "Meeting every Tuesday at 9 AM",
+        "start": "2026-09-08T09:00",
+        "rrule": "FREQ=WEEKLY;BYDAY=TU"
+      },
+      "actual": {
+        "start": "2026-09-08T09:00:00+05:00",
+        "end": "2026-09-08T10:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": "FREQ=WEEKLY;BYDAY=TU",
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "tuesday"
+      }
+    },
+    {
+      "text": "Meeting every weekday at 9 AM",
+      "passed": true,
+      "expected": {
+        "text": "Meeting every weekday at 9 AM",
+        "start": "2026-09-03T09:00",
+        "rrule": "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR"
+      },
+      "actual": {
+        "start": "2026-09-03T09:00:00+05:00",
+        "end": "2026-09-03T10:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR",
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "Meeting every weekday at 9 AM"
+      }
+    },
+    {
+      "text": "Meeting every first Tuesday at 10 AM",
+      "passed": true,
+      "expected": {
+        "text": "Meeting every first Tuesday at 10 AM",
+        "start": "2026-10-06T10:00",
+        "rrule": "FREQ=MONTHLY;BYDAY=1TU"
+      },
+      "actual": {
+        "start": "2026-10-06T10:00:00+05:00",
+        "end": "2026-10-06T11:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": "FREQ=MONTHLY;BYDAY=1TU",
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "tuesday"
+      }
+    },
+    {
+      "text": "Payment monthly on the 5th",
+      "passed": true,
+      "expected": {
+        "text": "Payment monthly on the 5th",
+        "start": "2026-09-05T00:00",
+        "rrule": "FREQ=MONTHLY;BYMONTHDAY=5"
+      },
+      "actual": {
+        "start": "2026-09-05T00:00:00+05:00",
+        "end": "2026-09-06T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": "FREQ=MONTHLY;BYMONTHDAY=5",
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "Payment monthly on the 5th"
+      }
+    },
+    {
+      "text": "Interview moved from Tuesday to Thursday at 4 PM",
+      "passed": true,
+      "expected": {
+        "text": "Interview moved from Tuesday to Thursday at 4 PM",
+        "start": "2026-09-03T16:00"
+      },
+      "actual": {
+        "start": "2026-09-03T16:00:00+05:00",
+        "end": "2026-09-03T17:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Selected the corrected or rescheduled target.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "thursday"
+      }
+    },
+    {
+      "text": "Meeting not Monday. It is Wednesday at 2 PM",
+      "passed": true,
+      "expected": {
+        "text": "Meeting not Monday. It is Wednesday at 2 PM",
+        "start": "2026-09-09T14:00"
+      },
+      "actual": {
+        "start": "2026-09-09T14:00:00+05:00",
+        "end": "2026-09-09T15:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Excluded the negated date.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "wednesday"
+      }
+    },
+    {
+      "text": "Meeting Thursday at 4 PM instead of Tuesday",
+      "passed": true,
+      "expected": {
+        "text": "Meeting Thursday at 4 PM instead of Tuesday",
+        "start": "2026-09-03T16:00"
+      },
+      "actual": {
+        "start": "2026-09-03T16:00:00+05:00",
+        "end": "2026-09-03T17:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "thursday"
+      }
+    },
+    {
+      "text": "Meeting sometime next week",
+      "passed": true,
+      "expected": {
+        "text": "Meeting sometime next week",
+        "review": true
+      },
+      "actual": {
+        "start": null,
+        "end": null,
+        "all_day": false,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [
+          "Date is not sufficiently specific."
+        ],
+        "explanation": [],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": null
+      }
+    },
+    {
+      "text": "Meeting around the 15th",
+      "passed": true,
+      "expected": {
+        "text": "Meeting around the 15th",
+        "review": true
+      },
+      "actual": {
+        "start": null,
+        "end": null,
+        "all_day": false,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [
+          "Date is not sufficiently specific."
+        ],
+        "explanation": [],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": null
+      }
+    },
+    {
+      "text": "Meeting Friday at 4",
+      "passed": true,
+      "expected": {
+        "text": "Meeting Friday at 4",
+        "review": true
+      },
+      "actual": {
+        "start": "2026-09-04T00:00:00+05:00",
+        "end": "2026-09-05T00:00:00+05:00",
+        "all_day": false,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [
+          "AM/PM is missing; choose an exact time."
+        ],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "friday"
+      }
+    },
+    {
+      "text": "EOD Friday",
+      "passed": true,
+      "expected": {
+        "text": "EOD Friday",
+        "review": true
+      },
+      "actual": {
+        "start": "2026-09-04T00:00:00+05:00",
+        "end": "2026-09-05T00:00:00+05:00",
+        "all_day": false,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [
+          "EOD time is not configured."
+        ],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "friday"
+      }
+    },
+    {
+      "text": "COB Monday",
+      "passed": true,
+      "expected": {
+        "text": "COB Monday",
+        "review": true
+      },
+      "actual": {
+        "start": "2026-09-07T00:00:00+05:00",
+        "end": "2026-09-08T00:00:00+05:00",
+        "all_day": false,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [
+          "COB time is not configured."
+        ],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "monday"
+      }
+    },
+    {
+      "text": "Meeting September 4 at 4 PM CST",
+      "passed": true,
+      "expected": {
+        "text": "Meeting September 4 at 4 PM CST",
+        "review": true
+      },
+      "actual": {
+        "start": null,
+        "end": null,
+        "all_day": false,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [
+          "Timezone abbreviation is ambiguous; choose an IANA timezone."
+        ],
+        "explanation": [],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": null
+      }
+    },
+    {
+      "text": "The meeting is not on Monday",
+      "passed": true,
+      "expected": {
+        "text": "The meeting is not on Monday",
+        "review": true
+      },
+      "actual": {
+        "start": null,
+        "end": null,
+        "all_day": false,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [
+          "Negated date; no event should be scheduled."
+        ],
+        "explanation": [],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": null
+      }
+    },
+    {
+      "text": "Meeting every month",
+      "passed": true,
+      "expected": {
+        "text": "Meeting every month",
+        "review": true
+      },
+      "actual": {
+        "start": null,
+        "end": null,
+        "all_day": false,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": "FREQ=MONTHLY",
+        "warnings": [
+          "Recurrence start date must be selected."
+        ],
+        "explanation": [],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": null
+      }
+    },
+    {
+      "text": "Meeting next month",
+      "passed": true,
+      "expected": {
+        "text": "Meeting next month",
+        "review": true
+      },
+      "actual": {
+        "start": null,
+        "end": null,
+        "all_day": false,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [
+          "Date is not sufficiently specific."
+        ],
+        "explanation": [],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": null
+      }
+    },
+    {
+      "text": "Submit 03/04/2026",
+      "passed": true,
+      "expected": {
+        "text": "Submit 03/04/2026",
+        "start": "2026-03-04T00:00",
+        "settings": {
+          "date_order": "MDY"
+        }
+      },
+      "actual": {
+        "start": "2026-03-04T00:00:00+05:00",
+        "end": "2026-03-05T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [
+          "PAST_DATE_WARNING"
+        ],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Numeric date interpreted using configured MDY order.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "03/04/2026"
+      }
+    },
+    {
+      "text": "Submit 03/04/2026",
+      "passed": true,
+      "expected": {
+        "text": "Submit 03/04/2026",
+        "start": "2026-04-03T00:00",
+        "settings": {
+          "date_order": "DMY"
+        }
+      },
+      "actual": {
+        "start": "2026-04-03T00:00:00+05:00",
+        "end": "2026-04-04T00:00:00+05:00",
+        "all_day": true,
+        "time_unknown": true,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [
+          "PAST_DATE_WARNING"
+        ],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Numeric date interpreted using configured DMY order.",
+          "Date only; exact time is unknown. All-day calendar representation requires approval."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "03/04/2026"
+      }
+    },
+    {
+      "text": "Submit October 12",
+      "passed": true,
+      "expected": {
+        "text": "Submit October 12",
+        "start": "2026-10-12T17:00",
+        "settings": {
+          "default_deadline_time": "17:00"
+        }
+      },
+      "actual": {
+        "start": "2026-10-12T17:00:00+05:00",
+        "end": "2026-10-12T18:00:00+05:00",
+        "all_day": false,
+        "time_unknown": false,
+        "timezone": "Asia/Karachi",
+        "source_timezone": null,
+        "rrule": null,
+        "warnings": [],
+        "explanation": [
+          "Resolved against 2026-09-03T10:00:00+05:00.",
+          "Year inferred from the source reference year; no automatic one-year rollover.",
+          "Time defaulted from deadline settings.",
+          "End uses configured default duration unless an explicit end is present."
+        ],
+        "reference_datetime": "2026-09-03T10:00:00+05:00",
+        "temporal_expression": "october 12"
+      }
+    }
+  ],
+  "accuracy": 1.0
+}

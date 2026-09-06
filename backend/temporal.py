@@ -24,7 +24,7 @@ def resolve(text, reference, settings):
     lower = text.lower().replace('–','-').replace('—','-')
     out = {'start':None,'end':None,'all_day':False,'time_unknown':True,'timezone':zone,'source_timezone':None,'rrule':None,'warnings':[], 'explanation':[], 'reference_datetime':ref.isoformat(), 'temporal_expression':None}
     warnings, reasons = out['warnings'], out['explanation']
-    if re.search(r'\b(sometime|around|approximately|maybe|possibly)\b|\bnext (week|month)\b',lower) and not re.search(r'(beginning|end|first|last) of|first '+DAY,lower):
+    if re.search(r'\b(sometime|around|approximately|maybe|possibly)\b|\bnext (week|month)\b',lower) and not re.search(r'(beginning|end|first|last) of|first business day|last working day|first '+DAY,lower):
         warnings.append('Date is not sufficiently specific.')
         return out
     explicit_zone = re.search(r'\b(UTC|GMT|Asia/[A-Za-z_]+|Europe/[A-Za-z_]+|America/[A-Za-z_]+)\b',text)
@@ -40,7 +40,7 @@ def resolve(text, reference, settings):
         warnings.append('Timezone abbreviation is ambiguous; choose an IANA timezone.'); return out
     # Corrections and reschedules choose the target, never the superseded date.
     working = lower
-    moved = re.search(r'(?:moved (?:from .+? )?to|rescheduled to|postponed until|changed to|make it|instead,?)\s+(.+)',lower)
+    moved = re.search(r'(?:moved (?:from .+? )?to|rescheduled to|postponed until|changed to|make it|instead(?! of),?)\s+(.+)',lower)
     if moved:
         working = moved[1]; reasons.append('Selected the corrected or rescheduled target.')
     elif 'instead of' in lower:
@@ -87,7 +87,7 @@ def resolve(text, reference, settings):
             count=int(expr.split()[1]); unit=expr.split()[2]
             date=ref+(relativedelta(months=count) if unit.startswith('month') else timedelta(days=count*(7 if unit.startswith('week') else 1)))
         else:
-            date=dateparser.parse(expr, languages=['en'], settings={'RELATIVE_BASE':ref.replace(tzinfo=None),'DATE_ORDER':settings.get('date_order','DMY'),'PREFER_LOCALE_DATE_ORDER':False,'PREFER_DATES_FROM':'current_period','RETURN_AS_TIMEZONE_AWARE':False})
+            date=dateparser.parse(expr, languages=['en'], settings={'RELATIVE_BASE':ref.replace(tzinfo=None),'DATE_ORDER':('YMD' if re.fullmatch(r'\d{4}-\d{2}-\d{2}',expr) else settings.get('date_order','DMY')),'PREFER_LOCALE_DATE_ORDER':False,'PREFER_DATES_FROM':'current_period','RETURN_AS_TIMEZONE_AWARE':False})
             if date:
                 date=date.replace(tzinfo=ZoneInfo(source_zone))
                 if not re.search(r'\b\d{4}\b',expr):
@@ -185,4 +185,3 @@ def resolve(text, reference, settings):
     reasons.insert(0,'Resolved against '+ref.isoformat()+'.')
     out['temporal_expression']=out['temporal_expression'] or text
     return out
-
