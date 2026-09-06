@@ -655,6 +655,7 @@ def create_app(directory=None):
                                 "end",
                                 "all_day",
                                 "timezone",
+                                "recurrence_timezone",
                                 "rrule",
                                 "resolution",
                             ]

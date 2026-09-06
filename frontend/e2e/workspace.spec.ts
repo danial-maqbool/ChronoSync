@@ -88,17 +88,14 @@ test("real browser workflow and responsive workspace", async ({
   await expect(
     page.getByRole("heading", { name: "Source evidence", exact: true }),
   ).toBeVisible();
-  await page.screenshot({
+  await page.locator(".preview").screenshot({
     path: "../docs/screenshots/event_detail.png",
-    fullPage: true,
   });
-  await page.screenshot({
+  await page.locator(".evidence").first().screenshot({
     path: "../docs/screenshots/source_evidence.png",
-    fullPage: true,
   });
-  await page.screenshot({
+  await page.locator(".resolution").first().screenshot({
     path: "../docs/screenshots/date_resolution.png",
-    fullPage: true,
   });
   await page.getByRole("button", { name: "Approve", exact: true }).click();
   await expect(page.getByRole("status")).toContainText("Event updated");
@@ -281,9 +278,10 @@ test("document uploads tags rules conflicts and deletion choices", async ({
   await expect(
     page.getByRole("heading", { name: "Calendar conflicts", exact: true }),
   ).toBeVisible();
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({
     path: "../docs/screenshots/conflict_detection.png",
-    fullPage: true,
+    fullPage: false,
   });
   await page
     .getByRole("button", { name: "Keep both & sync approved event" })

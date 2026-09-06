@@ -1,4 +1,5 @@
 export type Event = {
+  recurrence_timezone?: string | null;
   next_occurrence?: { start: string; end: string };
   attachments?: { url?: string; note?: string }[];
   id: string;

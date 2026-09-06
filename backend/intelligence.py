@@ -265,6 +265,8 @@ def extract(source, settings, existing, rules):
                 "end": resolution["end"],
                 "all_day": resolution["all_day"],
                 "timezone": settings["timezone"],
+                "recurrence_timezone": resolution.get("source_timezone")
+                or settings["timezone"],
                 "rrule": resolution["rrule"],
                 "reminders": settings["reminder_profiles"][importance],
                 "pinned": False,
@@ -318,8 +320,11 @@ def extract(source, settings, existing, rules):
 def occurrences(event, start, end):
     if not event.get("start"):
         return []
-    a = aware(event["start"], event["timezone"])
-    b = aware(event.get("end") or event["start"], event["timezone"])
+    from zoneinfo import ZoneInfo
+
+    zone = ZoneInfo(event.get("recurrence_timezone") or event["timezone"])
+    a = aware(event["start"], event["timezone"]).astimezone(zone)
+    b = aware(event.get("end") or event["start"], event["timezone"]).astimezone(zone)
     duration = b - a
     if event.get("rrule"):
         from dateutil.rrule import rrulestr

@@ -304,6 +304,7 @@ def same_calendar(a, b):
 
 def export_ics(events):
     from icalendar import Calendar, Event, Alarm
+    from zoneinfo import ZoneInfo
 
     cal = Calendar()
     cal.add("prodid", "-//ChronoSync//Local Calendar Assistant//EN")
@@ -321,13 +322,18 @@ def export_ics(events):
         ve.add("summary", event["title"])
         start = aware(event["start"], event["timezone"])
         end = aware(event["end"], event["timezone"])
+        output_zone = (
+            ZoneInfo(event.get("recurrence_timezone") or event["timezone"])
+            if event.get("rrule")
+            else timezone.utc
+        )
         ve.add(
             "dtstart",
-            start.date() if event.get("all_day") else start.astimezone(timezone.utc),
+            start.date() if event.get("all_day") else start.astimezone(output_zone),
         )
         ve.add(
             "dtend",
-            end.date() if event.get("all_day") else end.astimezone(timezone.utc),
+            end.date() if event.get("all_day") else end.astimezone(output_zone),
         )
         ve.add("description", event.get("description", ""))
         ve.add("location", event.get("location", ""))
@@ -344,4 +350,5 @@ def export_ics(events):
             alarm.add("trigger", -timedelta(minutes=offset))
             ve.add_component(alarm)
         cal.add_component(ve)
+    cal.add_missing_timezones()
     return cal.to_ical()

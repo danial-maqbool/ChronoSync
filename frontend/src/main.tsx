@@ -2223,6 +2223,7 @@ function editable(e: Event) {
       "start",
       "end",
       "timezone",
+      "recurrence_timezone",
       "all_day",
       "type",
       "importance",

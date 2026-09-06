@@ -169,3 +169,39 @@ def test_outlook_reconciliation_preserves_unresolved_recurrence(tmp_path, monkey
             == 409
         )
         assert app.state.store.get("event", e["id"])["rrule"] == "FREQ=WEEKLY;BYDAY=MO"
+
+
+def test_recurring_local_time_survives_dst_and_ics():
+    from backend.intelligence import occurrences
+    from backend.calendars import export_ics
+    from icalendar import Calendar
+    from dateutil.rrule import rrulestr
+
+    event = {
+        "id": "dst",
+        "title": "Weekly New York call",
+        "start": "2026-03-03T09:00:00-05:00",
+        "end": "2026-03-03T10:00:00-05:00",
+        "timezone": "America/New_York",
+        "rrule": "FREQ=WEEKLY;BYDAY=TU",
+        "status": "CONFIRMED",
+    }
+    rows = occurrences(
+        event,
+        datetime(2026, 3, 1, tzinfo=timezone.utc),
+        datetime(2026, 3, 20, tzinfo=timezone.utc),
+    )
+    assert rows[0][0].hour == rows[1][0].hour == 9
+    assert rows[0][0].utcoffset() == timedelta(hours=-5)
+    assert rows[1][0].utcoffset() == timedelta(hours=-4)
+    calendar = Calendar.from_ical(export_ics([event]))
+    item = calendar.walk("VEVENT")[0]
+    assert item["DTSTART"].params["TZID"] == "America/New_York"
+    dates = list(
+        rrulestr(
+            item["RRULE"].to_ical().decode() + ";COUNT=2",
+            dtstart=item.decoded("DTSTART"),
+        )
+    )
+    assert dates[1].hour == 9 and dates[1].utcoffset() == timedelta(hours=-4)
+    assert calendar.walk("VTIMEZONE")

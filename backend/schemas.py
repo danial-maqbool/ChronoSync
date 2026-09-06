@@ -10,6 +10,7 @@ class EventInput(BaseModel):
     start: datetime | None = None
     end: datetime | None = None
     timezone: str = "Asia/Karachi"
+    recurrence_timezone: str | None = None
     all_day: bool = False
     type: str = "Task"
     importance: Literal["CRITICAL", "HIGH", "MEDIUM", "LOW", "NONE"] = "MEDIUM"
@@ -25,9 +26,11 @@ class EventInput(BaseModel):
     projects: list[str] = Field(default_factory=list)
     related_ids: list[str] = Field(default_factory=list)
 
-    @field_validator("timezone")
+    @field_validator("timezone", "recurrence_timezone")
     @classmethod
     def valid_zone(cls, v):
+        if v is None:
+            return v
         try:
             ZoneInfo(v)
         except Exception:
