@@ -80,11 +80,15 @@ export function AccountGate({ children }: { children: ReactNode }) {
                 name="username"
                 autoComplete="username"
                 autoCapitalize="none"
-                pattern="[a-zA-Z0-9_.-]{3,40}"
+                pattern={"[a-zA-Z0-9_.\\-]{3,40}"}
                 required
                 minLength={3}
                 maxLength={40}
               />
+              <small>
+                Use 3–40 letters, numbers, dots, hyphens or underscores. No
+                spaces.
+              </small>
             </label>
             <label>
               Password

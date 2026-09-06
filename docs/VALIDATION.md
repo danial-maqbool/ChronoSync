@@ -18,8 +18,8 @@ handling on a physical S25 Ultra remain unverified because no Android device is
 connected. The Render/Neon deployment is now live at
 https://chronosync-qk1q.onrender.com. Live health, authentication-status,
 unauthenticated-access rejection, and cross-origin write rejection checks passed.
-The user reports completing account setup; an authenticated live workflow has not
-been independently verified. This is not
+First-account registration and the authenticated dashboard were verified in the
+live browser. This is not
 an always-running reminder service; see [mobile hosting limitations](MOBILE_HOSTING.md).
 
 ```powershell

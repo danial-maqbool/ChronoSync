@@ -4,7 +4,8 @@ Live service: https://chronosync-qk1q.onrender.com. Render reports a successful
 deployment of commit `09540955de87e0514884f08f09a9a096205974ea`. Live checks passed
 for cloud health (200), authentication status (200), unauthenticated workspace
 rejection (401), and cross-origin write rejection (403). First-account registration
-and physical Samsung device checks require the user.
+and the authenticated dashboard have also been verified in the live browser.
+Physical Samsung device checks remain unverified.
 
 The hosted edition preserves the Python application, adds invitation-only accounts
 (maximum three), and keeps every account's records separate. Local mode still uses

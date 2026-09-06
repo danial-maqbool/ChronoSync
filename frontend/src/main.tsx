@@ -899,7 +899,10 @@ function App() {
         <div className="workspace-switch">
           <span className="avatar">D</span>
           <div>
-            Personal workspace<small>Local · Private by default</small>
+            Personal workspace
+            <small>
+              {account.cloud ? "Hosted" : "Local"} · Private by default
+            </small>
           </div>
           <ChevronRight size={14} />
         </div>

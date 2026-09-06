@@ -53,8 +53,8 @@ export function ExtractionAnalytics({
     <section className="panel settings-panel">
       <h2>From information to intention.</h2>
       <p className="muted">
-        Local extraction analytics. Rates describe the current workspace; they
-        are not estimates of parser accuracy.
+        Extraction analytics. Rates describe the current workspace; they are not
+        estimates of parser accuracy.
       </p>
       <div className="analytics-grid">
         {rows.map(([label, value]) => (
