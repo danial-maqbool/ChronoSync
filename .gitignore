@@ -19,3 +19,4 @@ dist/
 test-results/
 playwright-report/
 *.log
+*.tsbuildinfo
