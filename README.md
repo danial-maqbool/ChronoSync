@@ -6,6 +6,8 @@ A local-first document, transcript and message calendar assistant. Import a sour
 
 **Status:** working local application with automated backend, temporal and browser validation. Real Outlook writes remain unverified. See [validation and limitations](docs/VALIDATION.md).
 
+**Android and private cloud edition:** invitation-only accounts (up to three), PostgreSQL persistence, a Render Free deployment template, and an Android APK client are now included. Cloud publishing requires your Render and Neon accounts. See [mobile installation, free hosting, and limitations](docs/MOBILE_HOSTING.md). Free hosting sleeps when idle; the APK does not provide native alarms or offline processing.
+
 ![ChronoSync dashboard](docs/screenshots/dashboard.png)
 
 ## The problem

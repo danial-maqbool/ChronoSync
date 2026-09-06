@@ -6,9 +6,9 @@ Original uploaded binaries are read locally but not retained. Extracted text, so
 
 ## Network behavior
 
-The app binds to 127.0.0.1. Host and cross-site write checks reduce browser-origin misuse. This is a single-user local application with no multi-user authentication or public deployment configuration. It must not be exposed to the internet unchanged.
+Local mode binds to 127.0.0.1 and retains single-user behavior. Cloud mode binds to the hosting interface, requires HTTPS, persistent PostgreSQL and invitation-only authentication, and isolates records by account. It rejects unauthenticated private API requests and cross-origin writes. Never expose local mode through a public proxy. See [hosted account security](MOBILE_HOSTING.md).
 
-No external AI calls are implemented. “Local processing only” reflects actual behavior. There are no remote fonts, tracking pixels or analytics services. Clipboard use is explicit paste only. The Outlook adapter operates through the local Outlook profile, which may synchronize through the user's existing Outlook configuration.
+No external AI calls are implemented. In local mode processing occurs on the laptop. In cloud mode documents are uploaded to the hosted Python server; extracted text and calendar records persist in the hosted PostgreSQL database under the signed-in account. The UI distinguishes these modes. There are no remote fonts, tracking pixels or analytics services. Clipboard use is explicit paste only. Desktop Outlook is disabled in cloud mode.
 
 ## Credentials
 

@@ -4,7 +4,19 @@ ChronoSync is a working local application. The full original specification is **
 
 ## Reproducible checks
 
-Final local results: **107 backend tests passed**, **68/68 temporal benchmark cases passed**, **4 Vitest tests passed**, **2 Playwright scenarios passed**, production build passed. The Python test client emits two dependency deprecation warnings. See `validation/summary.json` for machine-readable results and scope.
+Original local delivery: **107 backend tests passed**, **68/68 temporal benchmark cases passed**, **4 Vitest tests passed**, **2 Playwright scenarios passed**, production build passed. The Python test client emits two dependency deprecation warnings. `validation/summary.json` records that historical local delivery.
+
+Android/cloud preparation: **111 backend tests passed**, **4 Vitest tests passed**,
+**2 Playwright scenarios passed**, and the production web and Linux Docker builds
+passed. A real disposable PostgreSQL 16 instance passed account isolation, source
+and export access checks, and persistence across application restarts (see
+`validation/cloud-smoke.json`). The running Docker service returned a healthy cloud
+response and rejected an unauthenticated workspace request with HTTP 401.
+
+The release APK builds and its signing certificate verifies. Installation and file
+handling on a physical S25 Ultra remain unverified because no Android device is
+connected. Live Render/Neon deployment remains pending account access. This is not
+an always-running reminder service; see [mobile hosting limitations](MOBILE_HOSTING.md).
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q

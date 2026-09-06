@@ -1,5 +1,7 @@
 # ChronoSync delivery report
 
+Historical local-edition delivery report. The later Android/cloud account work is described in [MOBILE_HOSTING.md](MOBILE_HOSTING.md); do not interpret this report's local-only limitations or test counts as the current cloud release status.
+
 This report describes what was built and validated, not a claim that every optional or live-integration requirement in the original brief is complete.
 
 1. **Repository:** https://github.com/danial-maqbool/ChronoSync — public, MIT licensed.

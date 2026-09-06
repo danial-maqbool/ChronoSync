@@ -49,6 +49,7 @@ import {
 import "./style.css";
 import { ProjectsView } from "./projects";
 import { ExtractionAnalytics, RuleConflictNotice } from "./analytics";
+import { AccountGate, AccountActions, useAccount } from "./auth";
 
 const navigation = [
   ["Dashboard", LayoutDashboard],
@@ -65,6 +66,7 @@ const navigation = [
   ["Trash", Trash2],
 ] as const;
 function App() {
+  const account = useAccount();
   const [data, setData] = useState<Workspace | null>(null),
     [page, setPage] = useState("Dashboard"),
     [selected, setSelected] = useState<string | null>(null),
@@ -221,7 +223,7 @@ function App() {
       <div className="boot">
         <Clock3 size={40} />
         <h1>ChronoSync</h1>
-        <p>{error || "Opening your local workspace…"}</p>
+        <p>{error || "Opening your workspace…"}</p>
         <button onClick={() => refresh()}>Retry connection</button>
       </div>
     );
@@ -924,7 +926,12 @@ function App() {
           <div className="private-note">
             <ShieldCheck size={19} />
             <div>
-              Your data stays yours<small>Local processing only</small>
+              Your data stays yours
+              <small>
+                {account.cloud
+                  ? "Private cloud · AI disabled"
+                  : "Local processing only"}
+              </small>
             </div>
           </div>
           <button
@@ -934,12 +941,16 @@ function App() {
             <Command size={15} /> Command menu <kbd>Ctrl K</kbd>
           </button>
           <div className="profile">
-            <span className="avatar">D</span>
+            <span className="avatar">
+              {account.user?.username[0].toUpperCase() || "D"}
+            </span>
             <div>
-              Danial’s workspace<small>Personal edition</small>
+              {account.user?.username || "Danial"}’s workspace
+              <small>Personal edition</small>
             </div>
             <MoreHorizontal size={18} />
           </div>
+          <AccountActions />
         </div>
       </aside>
       <div className="main-shell">
@@ -1228,7 +1239,10 @@ function App() {
                     />
                     <div className="capture-footer">
                       <small>
-                        <ShieldCheck size={12} /> Processed locally
+                        <ShieldCheck size={12} />{" "}
+                        {account.cloud
+                          ? "Processed on your private server"
+                          : "Processed locally"}
                       </small>
                       <button
                         onClick={() =>
@@ -1573,7 +1587,10 @@ function App() {
                 <p>Drop PDF, DOCX, transcripts, emails or chat exports here.</p>
                 <button onClick={() => setModal("import")}>Browse files</button>
                 <small>
-                  Up to 20 MB per file · 50 files per batch · Local processing
+                  Up to 20 MB per file · 50 files per batch ·{" "}
+                  {account.cloud
+                    ? "Private cloud processing"
+                    : "Local processing"}
                 </small>
               </div>
               <div className="panel">
@@ -1803,7 +1820,10 @@ function App() {
           {page === "Rules" && <RuleConflictNotice rules={data.rules} />}
           <footer className="page-footer">
             <span>
-              <ShieldCheck size={13} /> Local-first. Evidence-backed. Yours.
+              <ShieldCheck size={13} />{" "}
+              {account.cloud
+                ? "Private account. Evidence-backed. Yours."
+                : "Local-first. Evidence-backed. Yours."}
             </span>
             <span>
               ChronoSync <i /> {zone}
@@ -2149,7 +2169,7 @@ function App() {
       {busy && (
         <div className="working-indicator">
           <RefreshCw size={14} className="spin" />
-          Working locally…
+          Working…
         </div>
       )}
     </div>
@@ -2562,6 +2582,7 @@ function SettingsView({
   run: (fn: () => Promise<unknown>, message?: string) => Promise<void>;
 }) {
   const [connection, setConnection] = useState("");
+  const account = useAccount();
   return (
     <div className="settings-grid">
       <section className="panel settings-panel">
@@ -2658,7 +2679,9 @@ function SettingsView({
               }
             >
               <option value="mock">Mock calendar · local testing</option>
-              <option value="outlook">Microsoft Outlook Desktop</option>
+              {!account.cloud && (
+                <option value="outlook">Microsoft Outlook Desktop</option>
+              )}
             </select>
           </label>
           <div className="notice">
@@ -2683,9 +2706,9 @@ function SettingsView({
           </button>
           {connection && <p className="notice">{connection}</p>}
           <p className="form-hint">
-            Classic Outlook + pywin32 required for direct integration. Outlook
-            supports one native reminder; recurring events can be exported as
-            ICS.
+            {account.cloud
+              ? "Export ICS files to your phone calendar for reminders. Free hosting sleeps when idle; server reminders do not run while it is asleep. Desktop Outlook cannot connect from this hosted app."
+              : "Classic Outlook + pywin32 required for direct integration. Outlook supports one native reminder; recurring events can be exported as ICS."}
           </p>
           <a className="button-link" href="/api/export/ics">
             <Download size={15} />
@@ -2696,10 +2719,16 @@ function SettingsView({
           <h2>
             <ShieldCheck size={18} /> Private by design
           </h2>
-          <p>Your documents and calendar data stay on this laptop.</p>
+          <p>
+            {account.cloud
+              ? "Your documents and calendar data are stored in your private cloud account, separately from other accounts."
+              : "Your documents and calendar data stay on this laptop."}
+          </p>
           <div className="privacy-status">
             <span className="dot low" />
-            Local processing only
+            {account.cloud
+              ? "Hosted processing · AI disabled"
+              : "Local processing only"}
           </div>
           <p className="form-hint">
             External AI is disabled. Source evidence never leaves the app for AI
@@ -2791,6 +2820,8 @@ function SettingsView({
 }
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
+    <AccountGate>
+      <App />
+    </AccountGate>
   </React.StrictMode>,
 );

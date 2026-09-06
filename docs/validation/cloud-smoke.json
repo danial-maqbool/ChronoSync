@@ -1,0 +1,7 @@
+{
+  "postgresql": "passed",
+  "account_isolation": "passed",
+  "sources_and_exports_isolated": "passed",
+  "restart_persistence": "passed",
+  "live_hosted_deployment": "not_run"
+}

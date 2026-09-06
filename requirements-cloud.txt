@@ -1,0 +1,2 @@
+-r requirements.txt
+extract-msg>=0.50,<1

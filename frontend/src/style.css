@@ -1,4 +1,68 @@
 @import "tailwindcss";
+.account-page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.account-card {
+  width: min(100%, 430px);
+  background: white;
+  border: 1px solid #e7ebe5;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 16px 60px #174d4310;
+}
+.account-card h1 {
+  font-family: Georgia, serif;
+  font-size: 36px;
+  margin: 18px 0 10px;
+}
+.account-card p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+.account-card form,
+.account-card label,
+.account-actions form,
+.account-actions label {
+  display: grid;
+  gap: 8px;
+}
+.account-card form {
+  gap: 18px;
+  margin: 24px 0;
+}
+.account-card input,
+.account-actions input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px;
+  border: 1px solid #c8d5d0;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.account-card button {
+  min-height: 44px;
+}
+.account-card small {
+  display: block;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #65765e;
+}
+.account-card [role="alert"] {
+  color: #9b3030;
+}
+.account-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.account-actions form {
+  width: 100%;
+}
 @theme {
   --font-sans: "Segoe UI", Inter, Arial, sans-serif;
 }

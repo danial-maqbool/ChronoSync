@@ -21,6 +21,6 @@ if __name__ == "__main__":
 
     uvicorn.run(
         create_app(),
-        host="127.0.0.1",
-        port=int(os.environ.get("CHRONOSYNC_PORT", "8765")),
+        host="0.0.0.0" if os.environ.get("CHRONOSYNC_MODE") == "cloud" else "127.0.0.1",
+        port=int(os.environ.get("PORT", os.environ.get("CHRONOSYNC_PORT", "8765"))),
     )

@@ -1,0 +1,15 @@
+# Free web service only. Use a Neon Free PostgreSQL URL, not expiring Render Free Postgres.
+services:
+  - type: web
+    name: chronosync
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    autoDeployTrigger: "off"
+    envVars:
+      - key: CHRONOSYNC_MODE
+        value: cloud
+      - key: DATABASE_URL
+        sync: false
+      - key: CHRONOSYNC_INVITE_CODE
+        generateValue: true

@@ -10,7 +10,10 @@ from threading import RLock
 from fastapi import FastAPI, HTTPException, UploadFile, File, Form, Request
 from fastapi.responses import Response, FileResponse
 from fastapi.staticfiles import StaticFiles
-from backend.db import Store, DEFAULTS, now
+from backend.db import Store, DEFAULTS, now, scoped_account
+from backend.auth import Authentication
+from fastapi.responses import JSONResponse
+from urllib.parse import urlsplit
 from backend.ingestion import parse_source
 from backend.intelligence import extract, conflicts, similar, occurrences
 from backend.temporal import aware
@@ -21,6 +24,7 @@ from backend.schemas import Capture, EventInput, Action, TagInput, RuleInput
 def create_app(directory=None):
     store = Store(directory)
     lock = RLock()
+    auth = Authentication(store, lock, testing=directory is not None)
 
     def settings():
         return store.get("settings", "settings") or DEFAULTS.copy()
@@ -99,7 +103,9 @@ def create_app(directory=None):
     async def scheduler():
         while True:
             try:
-                await asyncio.to_thread(reminder_tick)
+                for account_id in auth.account_ids() if auth.cloud else ["local"]:
+                    with scoped_account(account_id):
+                        await asyncio.to_thread(reminder_tick)
             except Exception:
                 # Avoid private source text in logs; retry on the next tick.
                 import logging
@@ -109,9 +115,7 @@ def create_app(directory=None):
                 )
             await asyncio.sleep(60)
 
-    @asynccontextmanager
-    async def lifespan(app):
-        store.migrate()
+    def seed():
         if not store.get("settings", "settings"):
             store.put("settings", DEFAULTS)
         if not store.all("tag"):
@@ -129,6 +133,16 @@ def create_app(directory=None):
                 ("Interview", "#8074a5"),
             ]:
                 store.put("tag", {"name": name, "color": color, "archived": False})
+
+    def initialize(account_id):
+        with scoped_account(account_id):
+            seed()
+
+    @asynccontextmanager
+    async def lifespan(app):
+        store.migrate()
+        if not auth.cloud:
+            initialize("local")
         task = asyncio.create_task(scheduler())
         yield
         task.cancel()
@@ -140,25 +154,65 @@ def create_app(directory=None):
     app = FastAPI(title="ChronoSync", lifespan=lifespan)
     app.state.store = store
     app.state.reminder_tick = reminder_tick
+    auth.install(app, initialize)
 
     @app.middleware("http")
     async def local_only(request: Request, call_next):
         host = request.headers.get("host", "").split(":")[0]
-        if host not in {"127.0.0.1", "localhost", "testserver"}:
+        allowed_hosts = (
+            {urlsplit(auth.origin).hostname}
+            if auth.cloud
+            else {"127.0.0.1", "localhost", "testserver"}
+        )
+        if host not in allowed_hosts:
             return Response("Local access only", 403)
         if request.method not in {"GET", "HEAD", "OPTIONS"}:
             origin = request.headers.get("origin")
-            if origin and origin not in {
-                str(request.base_url).rstrip("/"),
-                "http://127.0.0.1:5173",
-                "http://localhost:5173",
-            }:
+            allowed_origins = (
+                {auth.origin}
+                if auth.cloud
+                else {
+                    str(request.base_url).rstrip("/"),
+                    "http://127.0.0.1:5173",
+                    "http://localhost:5173",
+                }
+            )
+            if (auth.cloud and origin != auth.origin) or (
+                origin and origin not in allowed_origins
+            ):
                 return Response("Cross-origin write denied", 403)
             if request.headers.get("sec-fetch-site") == "cross-site":
                 return Response("Cross-site write denied", 403)
-        response = await call_next(request)
+        user = auth.user(request) if auth.cloud else None
+        public_api = request.url.path in {
+            "/api/health",
+            "/api/auth/status",
+            "/api/auth/login",
+            "/api/auth/register",
+            "/api/auth/logout",
+        }
+        if (
+            auth.cloud
+            and request.url.path.startswith("/api/")
+            and not public_api
+            and not user
+        ):
+            return JSONResponse(
+                {"detail": "Sign in to your workspace"},
+                401,
+                headers={"Cache-Control": "no-store"},
+            )
+        with scoped_account(
+            user["id"] if user else "unauthenticated" if auth.cloud else "local"
+        ):
+            response = await call_next(request)
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Referrer-Policy"] = "no-referrer"
+        response.headers["X-Frame-Options"] = "DENY"
+        if request.url.path.startswith("/api/"):
+            response.headers["Cache-Control"] = "no-store"
+        if auth.cloud:
+            response.headers["Strict-Transport-Security"] = "max-age=31536000"
         return response
 
     def ingest(name, content, timestamp=None, reprocess=False):
@@ -266,7 +320,11 @@ def create_app(directory=None):
 
     @app.get("/api/health")
     def health():
-        return {"status": "ok", "mode": "local", "ai": "disabled"}
+        return {
+            "status": "ok",
+            "mode": "cloud" if auth.cloud else "local",
+            "ai": "disabled",
+        }
 
     @app.get("/api/workspace")
     def workspace():

@@ -1,0 +1,23 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'com.chronosync.mobile'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'com.chronosync.mobile'
+        minSdk 30
+        targetSdk 35
+        versionCode 1
+        versionName '0.2.0'
+    }
+    signingConfigs {
+        release {
+            if (System.getenv('CHRONOSYNC_KEYSTORE')) {
+                storeFile file(System.getenv('CHRONOSYNC_KEYSTORE'))
+                storePassword System.getenv('CHRONOSYNC_KEY_PASSWORD')
+                keyAlias 'chronosync'
+                keyPassword System.getenv('CHRONOSYNC_KEY_PASSWORD')
+            }
+        }
+    }
+    buildTypes { release { signingConfig signingConfigs.release; minifyEnabled false } }
+}

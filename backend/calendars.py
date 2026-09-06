@@ -273,6 +273,12 @@ def provider(name, store):
     if name == "mock":
         return MockCalendarProvider(store)
     if name == "outlook":
+        import os
+
+        if os.environ.get("CHRONOSYNC_MODE") == "cloud":
+            raise ValueError(
+                "Desktop Outlook is available only on your laptop. Use ICS export on the hosted app."
+            )
         return OutlookCalendarProvider()
     raise ValueError("Unknown calendar provider")
 

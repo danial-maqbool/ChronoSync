@@ -4,7 +4,7 @@
 
 `python run.py` selects the local virtual environment and serves the built React app and FastAPI API at loopback port 8765. `CHRONOSYNC_DATA_DIR` selects a data directory; `CHRONOSYNC_PORT` selects the listening port. Environment variables must be set in the process; `.env.example` is a template, not an automatically loaded secret file.
 
-The FastAPI lifespan applies migrations and starts the reminder task. Shutdown cancels the task. API writes reject cross-site requests and unrecognized Host headers. This is a single-user local application, not an authenticated multi-user internet service.
+The FastAPI lifespan applies migrations and starts the reminder task. Shutdown cancels the task. API writes reject cross-site requests and unrecognized Host headers. Local mode remains single-user. The optional cloud mode validates sessions, scopes every record operation to the signed-in account, and uses persistent PostgreSQL. The reminder task iterates account scopes independently. See [cloud and Android architecture](MOBILE_HOSTING.md).
 
 ## Modules
 

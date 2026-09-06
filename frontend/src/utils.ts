@@ -56,6 +56,8 @@ export async function api<T = unknown>(
   }
   const r = await fetch("/api" + path, options);
   if (!r.ok) {
+    if (r.status === 401 && !path.startsWith("/auth/"))
+      window.dispatchEvent(new Event("chronosync-signed-out"));
     const data = await r.json().catch(() => ({ detail: r.statusText }));
     throw new Error(
       typeof data.detail === "string"
