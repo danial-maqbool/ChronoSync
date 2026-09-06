@@ -1,5 +1,11 @@
 # Android and free private hosting
 
+Live service: https://chronosync-qk1q.onrender.com. Render reports a successful
+deployment of commit `09540955de87e0514884f08f09a9a096205974ea`. Live checks passed
+for cloud health (200), authentication status (200), unauthenticated workspace
+rejection (401), and cross-origin write rejection (403). First-account registration
+and physical Samsung device checks require the user.
+
 The hosted edition preserves the Python application, adds invitation-only accounts
 (maximum three), and keeps every account's records separate. Local mode still uses
 the existing SQLite workspace. Hosted mode requires PostgreSQL; it refuses to start
@@ -8,7 +14,11 @@ with ephemeral SQLite storage or without HTTPS and an invitation secret.
 ## Free service setup
 
 Use **Render Free** for the Docker web service and **Neon Free** for PostgreSQL.
-Do not add payment methods or enable paid plans. These are third-party free tiers,
+Do not enable paid plans. Render may require card verification even for a free
+instance. This account required it, and the user completed verification and explicitly
+accepted possible bandwidth overage charges. The workspace's extra build spending
+limit is $0. A linked card means this is not a guaranteed zero-cost service: bandwidth
+beyond the included allowance can be billed. These are third-party free tiers,
 not a promise of perpetual availability or unlimited storage. Check the provider
 dashboards for current usage and limits. There is no paid AI or email dependency.
 
@@ -39,7 +49,9 @@ Install the signed `ChronoSync.apk` directly on the S25 Ultra. This avoids app-s
 publishing requirements. Transfer the APK to the phone, open it, and allow that file
 source to install this app when Android prompts. The app requires Android 11+.
 
-On first launch, enter the deployed HTTPS website address, then sign in. Each friend
+Version 0.2.1 opens the live service automatically on first launch. Sign in with the
+account created on the website. The older preview requires entering the deployed
+HTTPS website address first. Each friend
 uses the same website address and their own credentials. The APK is an Android
 WebView client for the hosted interface, with Android's document picker and download
 manager. It is not an offline rewrite of the application. It does not request
@@ -98,6 +110,5 @@ only. Release artifacts are ignored by Git and can be distributed separately.
 - [Neon plans](https://neon.com/pricing)
 - [Android WebView](https://developer.android.com/develop/ui/views/layout/webapps/webview)
 
-Deployment status and device verification must be recorded separately after the
-cloud accounts are connected. A local build does not prove a live deployment or
-successful installation on a physical Samsung phone.
+The live deployment has been verified separately from local builds. Successful
+installation and file handling on a physical Samsung phone remain unverified.

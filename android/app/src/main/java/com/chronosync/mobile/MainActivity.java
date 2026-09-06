@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
-        origin = getPreferences(MODE_PRIVATE).getString("origin", "");
+        origin = getPreferences(MODE_PRIVATE).getString("origin", "https://chronosync-qk1q.onrender.com");
         if (origin.isEmpty()) setup(); else openWorkspace();
     }
 
