@@ -16,6 +16,9 @@ def stamp(value, dayfirst=True):
     if not value:
         return None
     try:
+        if re.match(r'^\d{4}-\d{2}-\d{2}',str(value)):
+            from datetime import datetime
+            return datetime.fromisoformat(str(value).replace('Z','+00:00')).isoformat()
         if re.fullmatch(r'\d{10}(?:\.\d+)?', str(value)):
             from datetime import datetime, timezone
             return datetime.fromtimestamp(float(value), timezone.utc).isoformat()
@@ -109,4 +112,9 @@ def parse_source(name: str, content: bytes, dayfirst=True):
                     add(line)
     if not segments:
         raise ValueError('No readable text found in source')
+    for segment in segments[:10]:
+        date_header=re.search(r'(?im)^(?:document date|meeting date|transcript date|date):\s*(.+)$',segment['text'])
+        if date_header:
+            metadata['document_date']=stamp(date_header[1],dayfirst)
+            break
     return {'segments':segments, 'metadata':metadata, 'type':ext}

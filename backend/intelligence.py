@@ -17,12 +17,12 @@ def classify(text):
     return next((kind for kind,pattern in TYPE_RULES if re.search(pattern,text,re.I)), 'Task')
 
 def title_for(text):
-    title=re.split(r'\b(?:on|at|by|tomorrow|today|next|every|moved|rescheduled|has been cancelled|is cancelled|renews)\b',text,1,flags=re.I)[0]
+    title=re.split(r'\b(?:on|at|by|tomorrow|today|next|every|moved|rescheduled|has been cancelled|is cancelled|is not|no longer|renews)\b',text,maxsplit=1,flags=re.I)[0]
     match=DATE_PATTERN.search(title)
     if match: title=title[:match.start()]
     title=re.sub(r'^(?:please|reminder:?|the|your|actually,?)\s+','',title.strip(),flags=re.I)
     title=re.sub(r'\s+(?:is|will be held|will be|has|from|for|no later than|due)$','',title,flags=re.I).strip(' :,-.')
-    return (title[:100] or 'Commitment requiring review').capitalize()
+    return title[:1].upper()+title[1:100] if title else 'Commitment requiring review'
 
 def importance_for(text,kind):
     if re.search(r'urgent|critical|penalty|mandatory',text,re.I): return 'CRITICAL'
@@ -35,18 +35,19 @@ def extract(source, settings, existing, rules):
     for segment in source['segments']:
         text=segment['text']
         # Keep correction sentences together so pronoun references retain their subject.
-        chunks=[text] if re.search(r'\bnot\b|no longer|make it',text,re.I) else re.split(r'(?<=[.!?])\s+|\n',text)
+        chunks=[text] if re.search(r'\bnot\b|no longer|make it',text,re.I) else re.split(r'(?<=[.!?])\s+|\n|;\s*|\s+and\s+(?=(?:the )?(?:exam|meeting|presentation|payment|interview|project deadline)\b)',text,flags=re.I)
         for evidence in chunks:
             if not evidence.strip(): continue
+            if re.match(r'^(?:document date|meeting date|transcript date|date):',evidence,re.I): continue
             if re.search(r'\b(occurred|took place|was held|happened|met yesterday)\b',evidence,re.I): continue
             kind=classify(evidence)
             cancel=bool(re.search(r'cancelled|canceled|called off|no longer happening|postponed indefinitely|won.t take place',evidence,re.I))
             changed=bool(re.search(r'moved|rescheduled|postponed until|changed to|no longer|instead of|make it',evidence,re.I))
-            if not (DATE_PATTERN.search(evidence) or cancel or changed or re.search(r'next week|next month|around the|every|annually|business day|working day',evidence,re.I)): continue
+            if not (DATE_PATTERN.search(evidence) or cancel or changed or re.search(r'next week|next month|around the|every|annually|business day|working day|days? before',evidence,re.I)): continue
             if re.search(r'\bnot\s+(?:on\s+)?\w+\.?$',evidence,re.I) and not cancel: continue
-            reference=segment.get('timestamp') or source.get('source_timestamp') or source['created_at']
+            reference=segment.get('timestamp') or source.get('metadata',{}).get('document_date') or source.get('source_timestamp') or source['created_at']
             resolution=resolve(evidence,reference,settings)
-            reference_kind=segment.get('reference_kind') if segment.get('timestamp') else ('user-defined source date' if source.get('source_timestamp') else 'import date fallback')
+            reference_kind=segment.get('reference_kind') if segment.get('timestamp') else ('explicit document date' if source.get('metadata',{}).get('document_date') else ('user-defined source date' if source.get('source_timestamp') else 'import date fallback'))
             resolution['reference_kind']=reference_kind
             title=title_for(evidence)
             related=[e for e in existing+candidates if not e.get('deleted') and e.get('status') not in {'CANCELLED','ARCHIVED','COMPLETED'} and (similar(e['title'],title)>=.55 or (kind==e['type'] and kind!='Task'))]

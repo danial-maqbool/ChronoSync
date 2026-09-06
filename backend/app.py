@@ -42,6 +42,12 @@ def create_app(directory=None):
                 if e.get('deleted') or e.get('status') not in {'CONFIRMED','SYNCED','SNOOZED'} or not e.get('start'): continue
                 snooze=e.get('snoozed_until')
                 if snooze and aware(snooze,'UTC')>current: continue
+                if snooze:
+                    notify('Snoozed reminder: '+e['title'],e['id'])
+                    e.pop('snoozed_until',None)
+                    e['status']='SYNCED' if e.get('external_id') else 'CONFIRMED'
+                    store.put('event',e)
+                    continue
                 sent=e.get('delivered_reminders',[])
                 targets=occurrences(e,current-timedelta(days=1),current+timedelta(days=366))
                 changed=False
@@ -87,7 +93,7 @@ def create_app(directory=None):
             return Response('Local access only',403)
         if request.method not in {'GET','HEAD','OPTIONS'}:
             origin=request.headers.get('origin')
-            if origin and origin not in {'http://127.0.0.1:8765','http://localhost:8765','http://127.0.0.1:5173','http://localhost:5173'}:
+            if origin and origin not in {str(request.base_url).rstrip('/'),'http://127.0.0.1:5173','http://localhost:5173'}:
                 return Response('Cross-origin write denied',403)
             if request.headers.get('sec-fetch-site')=='cross-site': return Response('Cross-site write denied',403)
         response=await call_next(request)
@@ -133,6 +139,10 @@ def create_app(directory=None):
             all_events=events()
             for e in all_events:
                 e['conflicts']=conflicts(e,all_events,settings()['buffer']) if e.get('start') and not e.get('deleted') else []
+                if e.get('rrule') and e.get('start'):
+                    current=datetime.now(timezone.utc)
+                    upcoming=[(a,b) for a,b in occurrences(e,current,current+timedelta(days=366)) if b>current]
+                    if upcoming: e['next_occurrence']={'start':upcoming[0][0].isoformat(),'end':upcoming[0][1].isoformat()}
             return {'events':all_events,'sources':store.all('source'),'tags':store.all('tag'),'rules':store.all('rule'),'projects':store.all('project'),'audit':list(reversed(store.all('audit'))),'notifications':list(reversed(store.all('notification'))),'settings':settings(),'saved_views':store.all('view')}
     @app.post('/api/extraction/capture')
     def capture(body:Capture):
@@ -169,6 +179,21 @@ def create_app(directory=None):
             if not e['start'] or not e['end']: raise HTTPException(422,'Manual events require start and end')
             e.update(status='CONFIRMED',sync_state='NOT_SYNCED',sources=[],confidence=1,confidence_label='HIGH',history=[],deleted=False,resolution={'explanation':['Date explicitly entered by user.'],'warnings':[]})
             return save_event(e,'Event Created')
+    @app.post('/api/events/{ident}/attachments')
+    def attach_source(ident:str,body:dict):
+        with lock:
+            e=required('event',ident)
+            if body.get('source_id'):
+                s=required('source',body['source_id'])
+                e['sources'].append({'source_id':s['id'],'name':s['name'],'evidence':'Manually attached source; no extraction inference.','segment':{}})
+            elif body.get('url'):
+                from urllib.parse import urlparse
+                if urlparse(str(body['url'])).scheme not in {'https','http'}: raise HTTPException(422,'Use an HTTP or HTTPS URL')
+                e.setdefault('attachments',[]).append({'url':str(body['url'])[:2000]})
+            elif body.get('note'):
+                e.setdefault('attachments',[]).append({'note':str(body['note'])[:10000]})
+            else: raise HTTPException(422,'Choose a source, URL or note')
+            return save_event(e,'Source Attached')
     @app.put('/api/events/{ident}')
     def edit_event(ident:str,body:EventInput,calendar:bool=True):
         with lock:
@@ -299,6 +324,29 @@ def create_app(directory=None):
     def delete_rule(ident:str): return store.put('rule',{**required('rule',ident),'enabled':False})
     @app.post('/api/projects')
     def project(body:TagInput): return store.put('project',body.model_dump())
+    @app.put('/api/projects/{ident}')
+    def edit_project(ident:str,body:TagInput): return store.put('project',{**required('project',ident),**body.model_dump()})
+    @app.post('/api/settings/import')
+    def import_preferences(body:dict):
+        # Validate the full import before changing any records. No credentials accepted.
+        try:
+            if not set(body)<={'settings','tags','rules'}: raise ValueError('Unexpected backup fields')
+            tag_values=[TagInput.model_validate({k:v for k,v in t.items() if k in TagInput.model_fields}) for t in body.get('tags',[])]
+            rule_values=[RuleInput.model_validate({k:v for k,v in r.items() if k in RuleInput.model_fields}) for r in body.get('rules',[])]
+            prefs=body.get('settings',{})
+            if not set(prefs)<={'reminder_profiles','event_types'}: raise ValueError('Only profiles and event types can be imported')
+            for values in prefs.get('reminder_profiles',{}).values(): EventInput(title='validate',reminders=values)
+        except Exception as exc: raise HTTPException(422,str(exc))
+        with lock:
+            for t in tag_values:
+                existing=next((x for x in store.all('tag') if x['name']==t.name),{})
+                store.put('tag',{**existing,**t.model_dump()})
+            for r in rule_values:
+                existing=next((x for x in store.all('rule') if x['name']==r.name),{})
+                store.put('rule',{**existing,**r.model_dump()})
+            store.put('settings',{**settings(),**prefs})
+            store.audit('Preferences Imported')
+        return {'imported':True}
     @app.post('/api/views')
     def view(body:dict):
         if not body.get('name') or not isinstance(body.get('filters'),dict): raise HTTPException(422,'Name and filters required')
@@ -323,6 +371,18 @@ def create_app(directory=None):
     def test_calendar(name:str='mock'):
         try: return {'connected':True,'provider':name,'event_count':len(provider(name,store).list_events()),'writes_performed':False}
         except Exception as exc: return {'connected':False,'provider':name,'error':str(exc),'writes_performed':False}
+    @app.get('/api/calendar/occurrences')
+    def calendar_occurrences(start:str,end:str):
+        try:
+            a=aware(start,settings()['timezone']); b=aware(end,settings()['timezone'])
+            if b<=a or b-a>timedelta(days=400): raise ValueError('Choose a date range of 1–400 days')
+        except Exception as exc: raise HTTPException(422,str(exc))
+        result=[]
+        for e in events():
+            if e.get('deleted') or e['status'] not in {'CONFIRMED','SYNCED','SNOOZED'}: continue
+            for s,t in occurrences(e,a,b):
+                if s<b and t>a: result.append({**e,'start':s.isoformat(),'end':t.isoformat(),'series_start':e['start']})
+        return result
     @app.post('/api/notifications/{ident}/read')
     def read_notification(ident:str): return store.put('notification',{**required('notification',ident),'read':True})
     @app.get('/api/export/{format}')

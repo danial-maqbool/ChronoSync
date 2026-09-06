@@ -1,5 +1,9 @@
 import {test,expect} from '@playwright/test';
 import fs from 'node:fs';
+import path from 'node:path';
+import {execFileSync} from 'node:child_process';
+
+test.beforeAll(()=>{execFileSync(path.resolve('..',process.platform==='win32'?'.venv/Scripts/python.exe':'.venv/bin/python'),['scripts/generate_demo.py'],{cwd:path.resolve('..')});});
 
 test('real browser workflow and responsive workspace',async({page,request})=>{
  const errors:string[]=[],assets:string[]=[];
@@ -44,6 +48,7 @@ test('real browser workflow and responsive workspace',async({page,request})=>{
  await page.locator('nav').getByRole('button',{name:'Completed',exact:true}).click();
  await expect(page.getByRole('button',{name:/Browser verified meeting/})).toBeVisible();
  await page.locator('nav').getByRole('button',{name:'Dashboard',exact:true}).click();
+ await expect(page.getByRole('status')).not.toBeVisible({timeout:6000});
  for(const [width,height] of [[1920,1080],[1440,900],[1366,768],[1024,768],[390,844]]){
   await page.setViewportSize({width,height});
   await expect(page.locator('h1')).toBeVisible();
@@ -55,4 +60,44 @@ test('real browser workflow and responsive workspace',async({page,request})=>{
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
  await page.screenshot({path:'../docs/screenshots/mobile-inbox.png',fullPage:true});
  expect(errors).toEqual([]);expect(assets).toEqual([]);
+});
+
+test('document uploads tags rules conflicts and deletion choices',async({page,request})=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('/');await expect(page.locator('h1')).toBeVisible();
+ await page.getByRole('button',{name:'Import sources',exact:true}).click();
+ await page.getByRole('dialog').getByLabel('Files',{exact:true}).setInputFiles(['course-outline.pdf','course-outline.docx','Work meeting transcript.vtt','WhatsApp-style chat.txt','interview.eml'].map(f=>path.resolve('../data/demo',f)));
+ await page.getByRole('dialog').getByRole('button',{name:'Import & find events'}).click();
+ await expect(page.getByRole('dialog')).not.toBeVisible();
+ await page.locator('nav').getByRole('button',{name:'Sources',exact:true}).click();
+ await expect(page.getByRole('button',{name:/course-outline.pdf/})).toBeVisible();
+ await page.locator('nav').getByRole('button',{name:'Tags',exact:true}).click();
+ await page.getByRole('button',{name:'Create tag',exact:true}).click();
+ await page.getByRole('dialog').getByLabel('Tag name').fill('Browser custom tag');
+ await page.getByRole('dialog').getByRole('button',{name:'Save tag'}).click();
+ await expect(page.getByRole('heading',{name:'Browser custom tag'})).toBeVisible();
+ await page.locator('nav').getByRole('button',{name:'Rules',exact:true}).click();
+ await page.getByRole('button',{name:'Create rule',exact:true}).click();
+ await page.getByRole('dialog').getByLabel('Rule name').fill('Exams need attention');
+ await page.getByRole('dialog').getByLabel('Value',{exact:true}).fill('exam');
+ await page.getByRole('dialog').getByLabel('Set importance').selectOption('CRITICAL');
+ await page.getByRole('dialog').getByRole('button',{name:'Save rule'}).click();
+ await expect(page.getByRole('heading',{name:'Exams need attention'})).toBeVisible();
+ await page.screenshot({path:'../docs/screenshots/rules.png',fullPage:true});
+ const body={title:'Conflict verification A',start:'2026-11-03T10:00:00+05:00',end:'2026-11-03T11:00:00+05:00'};
+ const a=await (await request.post('/api/events',{data:body})).json();
+ await request.post('/api/events',{data:{...body,title:'Conflict verification B',start:'2026-11-03T10:30:00+05:00'}});
+ await page.reload();await page.locator('nav').getByRole('button',{name:'Upcoming',exact:true}).click();
+ await page.getByRole('button',{name:/Conflict verification A/}).click();
+ await expect(page.getByRole('heading',{name:'Calendar conflicts',exact:true})).toBeVisible();
+ await page.screenshot({path:'../docs/screenshots/conflict_detection.png',fullPage:true});
+ await page.getByRole('button',{name:'Keep both & sync approved event'}).click();
+ await expect(page.locator('.detail-content')).toContainText('SYNCED');
+ await page.getByRole('button',{name:'Delete',exact:true}).click();
+ await expect(page.getByRole('button',{name:'Delete from ChronoSync and calendar',exact:true})).toBeVisible();
+ await page.getByRole('button',{name:'Delete from ChronoSync only',exact:true}).click();
+ const ws=await (await request.get('/api/workspace')).json();
+ expect(ws.events.find((e:any)=>e.id===a.id).deleted).toBe(true);
+ expect(ws.events.find((e:any)=>e.id===a.id).external_id).toBeTruthy();
+ expect(errors).toEqual([]);
 });

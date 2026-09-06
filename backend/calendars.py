@@ -48,7 +48,7 @@ def outlook():
 
 class OutlookCalendarProvider(CalendarProvider):
     def _write(self,item,event):
-        if event.get('rrule'): raise ValueError('Outlook recurring writes are not supported by this adapter; use ICS.')
+        recurrence=outlook_recurrence(event.get('rrule'))
         item.Subject=event['title']; item.Body=event.get('description',''); item.Location=event.get('location','')
         item.MeetingStatus=0  # Appointment only; never send invitations.
         item.AllDayEvent=event.get('all_day',False)
@@ -61,6 +61,14 @@ class OutlookCalendarProvider(CalendarProvider):
         reminders=event.get('reminders',[])
         item.ReminderSet=bool(reminders)
         if reminders: item.ReminderMinutesBeforeStart=min(reminders)
+        if recurrence:
+            pattern=item.GetRecurrencePattern()
+            pattern.RecurrenceType=recurrence.pop('RecurrenceType')
+            for name,value in recurrence.items(): setattr(pattern,name,value)
+            pattern.PatternStartDate=item.Start
+            pattern.StartTime=item.Start
+            pattern.Duration=int((aware(event['end'],event['timezone'])-aware(event['start'],event['timezone'])).total_seconds()/60)
+        elif getattr(item,'IsRecurring',False): item.ClearRecurrencePattern()
         item.Save()
         return item.EntryID
     def create_event(self,event):
@@ -85,6 +93,37 @@ class OutlookCalendarProvider(CalendarProvider):
             start=datetime.now()-timedelta(days=1); end=start+timedelta(days=100)
             items=items.Restrict("[Start] < '"+end.strftime('%m/%d/%Y %I:%M %p')+"' AND [End] > '"+start.strftime('%m/%d/%Y %I:%M %p')+"'")
             return [self._read(item) for item in items][:2000]
+
+def outlook_recurrence(rule):
+    """Translate supported RRULE fields before touching a COM appointment."""
+    if not rule: return None
+    import re
+    fields=dict(part.split('=',1) for part in rule.split(';'))
+    if not set(fields)<={'FREQ','INTERVAL','BYDAY','BYMONTHDAY','BYMONTH','COUNT','UNTIL'}:
+        raise ValueError('This recurrence needs ICS export; unsupported Outlook RRULE fields')
+    freq=fields['FREQ']; byday=fields.get('BYDAY','')
+    pattern={'RecurrenceType':{'DAILY':0,'WEEKLY':1,'MONTHLY':2,'YEARLY':5}.get(freq)}
+    if pattern['RecurrenceType'] is None: raise ValueError('Unsupported Outlook recurrence frequency')
+    pattern['Interval']=int(fields.get('INTERVAL','1'))
+    masks={'SU':1,'MO':2,'TU':4,'WE':8,'TH':16,'FR':32,'SA':64}
+    if byday:
+        ordinal=re.fullmatch(r'(-1|[1-4])(MO|TU|WE|TH|FR|SA|SU)',byday)
+        if ordinal and freq in {'MONTHLY','YEARLY'}:
+            pattern['RecurrenceType']=3 if freq=='MONTHLY' else 6
+            pattern['Instance']=5 if ordinal[1]=='-1' else int(ordinal[1])
+            pattern['DayOfWeekMask']=masks[ordinal[2]]
+        else:
+            if any(d not in masks for d in byday.split(',')): raise ValueError('Unsupported Outlook ordinal recurrence')
+            pattern['DayOfWeekMask']=sum(masks[d] for d in byday.split(','))
+    if fields.get('BYMONTHDAY'):
+        if not fields['BYMONTHDAY'].isdigit(): raise ValueError('Use ICS for negative or multiple month days')
+        pattern['DayOfMonth']=int(fields['BYMONTHDAY'])
+    if fields.get('BYMONTH'): pattern['MonthOfYear']=int(fields['BYMONTH'])
+    if fields.get('COUNT'): pattern['Occurrences']=int(fields['COUNT'])
+    elif fields.get('UNTIL'):
+        pattern['PatternEndDate']=datetime.strptime(fields['UNTIL'][:8],'%Y%m%d')
+    else: pattern['NoEndDate']=True
+    return pattern
 
 def provider(name,store):
     if name=='mock': return MockCalendarProvider(store)
