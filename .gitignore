@@ -20,3 +20,5 @@ test-results/
 playwright-report/
 *.log
 *.tsbuildinfo
+.ruff_cache/
+docs/validation/playwright.json

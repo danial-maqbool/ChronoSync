@@ -1,3 +1,24 @@
-import {describe,it,expect} from 'vitest';
-import {dayKey,upcomingGroup,isInbox,reminderLabel} from './utils';
-describe('workspace date behavior',()=>{it('uses profile timezone across UTC midnight',()=>{expect(dayKey('2026-09-03T22:00:00Z','Asia/Karachi')).toBe('2026-09-04')});it('groups dates consistently',()=>{expect(upcomingGroup('2026-09-04T10:00:00+05:00','Asia/Karachi',new Date('2026-09-03T10:00:00+05:00'))).toBe('Tomorrow')});it('preserves review states',()=>{expect(isInbox('NEEDS_REVIEW')).toBe(true);expect(isInbox('SYNCED')).toBe(false)});it('renders reminder units',()=>{expect(reminderLabel(1440)).toBe('1d');expect(reminderLabel(15)).toBe('15m')})});
+import { describe, it, expect } from "vitest";
+import { dayKey, upcomingGroup, isInbox, reminderLabel } from "./utils";
+describe("workspace date behavior", () => {
+  it("uses profile timezone across UTC midnight", () => {
+    expect(dayKey("2026-09-03T22:00:00Z", "Asia/Karachi")).toBe("2026-09-04");
+  });
+  it("groups dates consistently", () => {
+    expect(
+      upcomingGroup(
+        "2026-09-04T10:00:00+05:00",
+        "Asia/Karachi",
+        new Date("2026-09-03T10:00:00+05:00"),
+      ),
+    ).toBe("Tomorrow");
+  });
+  it("preserves review states", () => {
+    expect(isInbox("NEEDS_REVIEW")).toBe(true);
+    expect(isInbox("SYNCED")).toBe(false);
+  });
+  it("renders reminder units", () => {
+    expect(reminderLabel(1440)).toBe("1d");
+    expect(reminderLabel(15)).toBe("15m");
+  });
+});

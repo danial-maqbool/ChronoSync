@@ -1,7 +1,120 @@
-export type Event = {next_occurrence?:{start:string;end:string};attachments?:{url?:string;note?:string}[];id:string;title:string;description:string;start:string|null;end:string|null;timezone:string;all_day:boolean;type:string;importance:string;status:string;tags:string[];reminders:number[];location:string;notes:string;people:string[];organization:string;rrule:string|null;pinned:boolean;projects:string[];related_ids:string[];confidence:number;confidence_label:string;sync_state:string;external_id?:string;deleted?:boolean;change_kind?:string;duplicate_ids?:string[];sources:{name:string;source_id:string;evidence:string;segment:Record<string,unknown>}[];resolution:{warnings?:string[];explanation?:string[];reference_datetime?:string;reference_kind?:string;temporal_expression?:string};history:{at:string;action:string;detail:unknown}[];conflicts:{id:string;title:string;severity:string;start:string;end:string}[];snoozed_until?:string;sync_error?:string;provider?:string};
-export type Source={id:string;name:string;type:string;created_at:string;source_timestamp:string;processing_status:string;error?:string;event_count:number;text_length:number;checksum:string;segments:{text:string;index:number;page?:number;speaker?:string;timestamp?:string}[];removed_event_ids?:string[]};
-export type Tag={id:string;name:string;color:string;archived:boolean;deleted?:boolean};
-export type Rule={id:string;name:string;priority:number;enabled:boolean;conditions:Record<string,string>;actions:Record<string,unknown>};
-export type Settings={timezone:string;date_order:string;eod:string|null;cob:string|null;default_deadline_time:string|null;duration:number;buffer:number;provider:string;reminder_profiles:Record<string,number[]>;event_types:string[];[key:string]:unknown};
-export type Workspace={events:Event[];sources:Source[];tags:Tag[];rules:Rule[];projects:Tag[];settings:Settings;audit:{id:string;created_at:string;action:string;event_id:string}[];notifications:{id:string;title:string;read:boolean;created_at:string;event_id:string}[];saved_views:{id:string;name:string;filters:Record<string,string>}[]};
-
+export type Event = {
+  next_occurrence?: { start: string; end: string };
+  attachments?: { url?: string; note?: string }[];
+  id: string;
+  title: string;
+  description: string;
+  start: string | null;
+  end: string | null;
+  timezone: string;
+  all_day: boolean;
+  type: string;
+  importance: string;
+  status: string;
+  tags: string[];
+  reminders: number[];
+  location: string;
+  notes: string;
+  people: string[];
+  organization: string;
+  rrule: string | null;
+  pinned: boolean;
+  projects: string[];
+  related_ids: string[];
+  confidence: number;
+  confidence_label: string;
+  sync_state: string;
+  external_id?: string;
+  deleted?: boolean;
+  change_kind?: string;
+  duplicate_ids?: string[];
+  sources: {
+    name: string;
+    source_id: string;
+    evidence: string;
+    segment: Record<string, unknown>;
+  }[];
+  resolution: {
+    warnings?: string[];
+    explanation?: string[];
+    reference_datetime?: string;
+    reference_kind?: string;
+    temporal_expression?: string;
+  };
+  history: { at: string; action: string; detail: unknown }[];
+  conflicts: {
+    id: string;
+    title: string;
+    severity: string;
+    start: string;
+    end: string;
+  }[];
+  snoozed_until?: string;
+  sync_error?: string;
+  provider?: string;
+};
+export type Source = {
+  id: string;
+  name: string;
+  type: string;
+  created_at: string;
+  source_timestamp: string;
+  processing_status: string;
+  error?: string;
+  event_count: number;
+  text_length: number;
+  checksum: string;
+  segments: {
+    text: string;
+    index: number;
+    page?: number;
+    speaker?: string;
+    timestamp?: string;
+  }[];
+  removed_event_ids?: string[];
+};
+export type Tag = {
+  id: string;
+  name: string;
+  color: string;
+  archived: boolean;
+  deleted?: boolean;
+};
+export type Rule = {
+  id: string;
+  name: string;
+  priority: number;
+  enabled: boolean;
+  conditions: Record<string, string>;
+  actions: Record<string, unknown>;
+};
+export type Settings = {
+  timezone: string;
+  date_order: string;
+  eod: string | null;
+  cob: string | null;
+  default_deadline_time: string | null;
+  duration: number;
+  buffer: number;
+  provider: string;
+  reminder_profiles: Record<string, number[]>;
+  event_types: string[];
+  [key: string]: unknown;
+};
+export type Workspace = {
+  events: Event[];
+  sources: Source[];
+  tags: Tag[];
+  rules: Rule[];
+  projects: Tag[];
+  settings: Settings;
+  audit: { id: string; created_at: string; action: string; event_id: string }[];
+  notifications: {
+    id: string;
+    title: string;
+    read: boolean;
+    created_at: string;
+    event_id: string;
+  }[];
+  saved_views: { id: string; name: string; filters: Record<string, string> }[];
+};
