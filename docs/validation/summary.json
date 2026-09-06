@@ -1,0 +1,73 @@
+{
+  "backend": {
+    "tests": 107,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "temporal_benchmark": {
+    "cases": 68,
+    "passed": 68,
+    "accuracy": 1.0,
+    "reference": "2026-09-03T10:00:00+05:00"
+  },
+  "playwright": {
+    "expected": 2,
+    "unexpected": 0,
+    "skipped": 0,
+    "flaky": 0
+  },
+  "frontend_unit_tests": {
+    "passed": 4,
+    "failed": 0
+  },
+  "production_build": "passed",
+  "viewports": [
+    [
+      1920,
+      1080
+    ],
+    [
+      1440,
+      900
+    ],
+    [
+      1366,
+      768
+    ],
+    [
+      1024,
+      768
+    ],
+    [
+      390,
+      844
+    ]
+  ],
+  "uncaught_frontend_errors": 0,
+  "missing_required_assets": 0,
+  "outlook_live_status": "read-only COM probe timed out after 20 seconds; no live writes",
+  "screenshots": [
+    "audit.png",
+    "calendar.png",
+    "completed.png",
+    "conflict_detection.png",
+    "dashboard.png",
+    "date_resolution.png",
+    "event_detail.png",
+    "event_inbox.png",
+    "mobile-inbox.png",
+    "responsive-1024.png",
+    "responsive-1366.png",
+    "responsive-1440.png",
+    "responsive-1920.png",
+    "responsive-390.png",
+    "rules.png",
+    "settings.png",
+    "source_evidence.png",
+    "sources.png",
+    "tags.png",
+    "upcoming.png"
+  ],
+  "scope": "Authored local regression tests and synthetic browser scenarios; not general-corpus accuracy or live calendar acceptance."
+}
